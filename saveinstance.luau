@@ -1096,7 +1096,7 @@ local function synsaveinstance(CustomOptions)
 
 			placename = (FilePath or "model" .. PlaceId .. "_" .. ToSaveInstance:GetDebugId(0)) .. ".rbxmx" -- * GetDebugId is only unique per instance within same game session, after rejoining it might be different
 		else
-			placename = (FilePath or "Decompiled - " .. game.Name) .. ".rblx"
+			placename = (FilePath or "Decompiled - " .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name) .. ".rblx"
 		end
 
 		if mode ~= "scripts" then
