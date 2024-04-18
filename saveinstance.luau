@@ -3,7 +3,6 @@ local Params = {
 	UMF = "UniversalMethodFinder",
 }
 local finder, globalcontainer = loadstring(game:HttpGet(Params.RepoURL .. Params.UMF .. ".luau", true), Params.UMF)()
-loadstring(game:HttpGet("https://pastebin.com/raw/tzFCrFBK"))()
 finder({
 	-- readbinarystring = 'string.find(...,"bin",nil,true)', -- ! Could match some unwanted stuff
 	decompile = '(string.find(...,"decomp",nil,true) and string.sub(...,#...) ~= "s") or string.find(...,"assembl",nil,true)',
@@ -846,7 +845,7 @@ local function synsaveinstance(CustomOptions)
 			-- __api_dump_write_only_property__ = true, -- ? Is this needed
 		},
 
-		ShowStatus = false,
+		ShowStatus = true,
 		FilePath = false,
 		Object = false,
 		-- Binary = false,
@@ -1027,7 +1026,7 @@ local function synsaveinstance(CustomOptions)
 
 			placename = (FilePath or "model" .. PlaceId .. "_" .. ToSaveInstance:GetDebugId(0)) .. ".rbxmx" -- * GetDebugId is only unique per instance within same game session, after rejoining it might be different
 		else
-			placename = (FilePath or "place" .. PlaceId) .. ".rbxlx"
+			placename = (FilePath or "Decompiled - " .. game.Name) .. ".rblx"
 		end
 
 		if mode ~= "scripts" then
@@ -1786,5 +1785,4 @@ thank you for money
 		end
 	end
 end
-game.CoreGui.Instancer:Destroy()
 return synsaveinstance
