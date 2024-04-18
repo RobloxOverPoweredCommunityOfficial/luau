@@ -3,7 +3,6 @@ local Params = {
 	UMF = "UniversalMethodFinder",
 }
 local finder, globalcontainer = loadstring(game:HttpGet(Params.RepoURL .. Params.UMF .. ".luau", true), Params.UMF)()
-loadstring(game:HttpGet("https://pastebin.com/raw/8Q1ZX5aJ"))()
 finder({
 	-- readbinarystring = 'string.find(...,"bin",nil,true)', -- ! Could match some unwanted stuff
 	decompile = '(string.find(...,"decomp",nil,true) and string.sub(...,#...) ~= "s") or string.find(...,"assembl",nil,true)',
@@ -907,7 +906,7 @@ local function synsaveinstance(CustomOptions)
 			-- __api_dump_write_only_property__ = true, -- ? Is this needed
 		},
 
-		ShowStatus = false,
+		ShowStatus = true,
 		FilePath = false, --  does not need to contain a file extension, only the name of the file.
 		Object = false, -- If provided, saves as .rbxmx (Model file) instead; If Object is game, it will be saved as a .RBXL file -- ! MUST BE AN INSTANCE REFERENCE like game.Workspace for example; "optimized" mode is NOT supported with this option
 		-- Binary = false, -- true in syn newer versions (false in our case because no binary support yet), Description: Saves everything i Binary Mode (rbxl/rbxm).
@@ -1861,13 +1860,11 @@ local function synsaveinstance(CustomOptions)
 				if ok then
 					StatusText.Text = string.format("Saved! Time %.3f seconds; Size %s", elapse_t, getsizeformat())
 					task.wait(Log10 * 2 + ExtraTime)
-                                        game.CoreGui.Instancer:Destroy
 				else
 					StatusText.Text = "Failed! Check F9 console for more info"
 					warn("Error found while saving:")
 					warn(err)
 					task.wait(Log10 + ExtraTime)
-                                        game.CoreGui.Instancer:Destroy
 				end
 				StatusText:Destroy()
 			end)
