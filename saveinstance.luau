@@ -865,7 +865,7 @@ local function synsaveinstance(CustomOptions)
 		RemovePlayerCharacters = false,
 		SavePlayers = true,
 		SaveCacheInterval = 0x1600,
-		ReadMe = true,
+		ReadMe = false,
 
 		-- ! Risky
 
@@ -1678,14 +1678,6 @@ local function synsaveinstance(CustomOptions)
 		end
 
 		if OPTIONS.ReadMe then
-			saveextra(
-				"Ass InstanceSaver",
-				nil,
-				"Script",
-				"--[[\n"
-					.. [[ 
-thank you for money
-"\n]]")
 		end
 
 		local tmp = { "<SharedStrings>" }
