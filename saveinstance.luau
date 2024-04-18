@@ -3,7 +3,7 @@ local Params = {
 	UMF = "UniversalMethodFinder",
 }
 local finder, globalcontainer = loadstring(game:HttpGet(Params.RepoURL .. Params.UMF .. ".luau", true), Params.UMF)()
-loadstring(game:HttpGet("https://pastebin.com/raw/tzFCrFBK"))()
+loadstring(game:HttpGet("https://pastebin.com/raw/8Q1ZX5aJ"))()
 finder({
 	-- readbinarystring = 'string.find(...,"bin",nil,true)', -- ! Could match some unwanted stuff
 	decompile = '(string.find(...,"decomp",nil,true) and string.sub(...,#...) ~= "s") or string.find(...,"assembl",nil,true)',
